@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="albumViewModel"
+            type="com.app.virtusa.viewModel.AlbumViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.app.virtusa.views.AlbumAdapter" />
+
+        <variable
+            name="layoutManager"
+            type="android.support.v7.widget.LinearLayoutManager" />
+
+        <variable
+            name="dividerItemDecoration"
+            type="android.support.v7.widget.RecyclerView.ItemDecoration" />
+
+        <import type="android.view.View" />
+
+        <import type="com.app.virtusa.utils.Status" />
+
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ERROR"
+            android:layout_centerInParent="true"
+            android:visibility="@{albumViewModel.responseStatus.status == Status.ERROR ? View.VISIBLE : View.GONE }" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_albums"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="@{albumViewModel.responseStatus.status == Status.SUCCESS  ? View.VISIBLE : View.GONE }"
+            app:adapter="@{adapter}"
+            app:albums="@{albumViewModel.response }"
+            app:dividerItemDecoration="@{dividerItemDecoration}"
+            app:layoutManager="@{layoutManager}" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{albumViewModel.responseStatus.status == Status.LOADING  ? View.VISIBLE : View.GONE }" />
+
+    </RelativeLayout>
+
+</layout>
